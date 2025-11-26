@@ -16,5 +16,22 @@ public class Voter {
 
     private boolean hasVoted = false;
 
+    //getters
+    public boolean isHasVoted() {
+        return hasVoted;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    //setters
+    public void setHasVoted(boolean hasVoted) {
+        this.hasVoted = hasVoted;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
 

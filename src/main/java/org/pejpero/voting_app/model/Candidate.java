@@ -16,5 +16,27 @@ public class Candidate {
 
     private int votesCount = 0;
 
+    //getters
+    public void setVotesCount(int votesCount) {
+        this.votesCount = votesCount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    //setters
+    public int getVotesCount() {
+        return votesCount;
+    }
+
+    public void setNewVote() {
+        this.votesCount++;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }
 
