@@ -28,5 +28,9 @@ public class VoterController {
         return repo.findAll();
     }
 
+    @PostMapping("/{voterId}/vote/{candidateId}")
+    public void vote(@PathVariable Long voterId, @PathVariable Long candidateId) {
+        votingService.castVote(candidateId, voterId);
+    }
 }
 

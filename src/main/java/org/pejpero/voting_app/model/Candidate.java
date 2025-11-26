@@ -17,26 +17,33 @@ public class Candidate {
     private int votesCount = 0;
 
     //getters
-    public void setVotesCount(int votesCount) {
-        this.votesCount = votesCount;
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    //setters
     public int getVotesCount() {
         return votesCount;
     }
 
-    public void setNewVote() {
-        this.votesCount++;
+    //setters
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-}
+    public void setVotesCount(int votesCount) {
+        this.votesCount = votesCount;
+    }
 
+    // helper
+    public void setNewVote() {
+        this.votesCount++;
+    }
+}

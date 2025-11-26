@@ -3,7 +3,9 @@ package org.pejpero.voting_app.controller;
 import org.pejpero.voting_app.model.Candidate;
 import org.pejpero.voting_app.repository.CandidateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.pejpero.voting_app.service.CandidateService;
 
 import java.util.List;
 
@@ -15,8 +17,9 @@ public class CandidateController {
     private CandidateRepository repo;
 
     @PostMapping
-    public Candidate add(@RequestBody Candidate c) {
-        return repo.save(c);
+    public ResponseEntity<Candidate> add(@RequestBody Candidate candidate) {
+        Candidate saved = repo.save(candidate);
+        return ResponseEntity.ok(saved);
     }
 
     @GetMapping

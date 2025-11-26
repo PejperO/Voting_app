@@ -17,15 +17,23 @@ public class Voter {
     private boolean hasVoted = false;
 
     //getters
-    public boolean isHasVoted() {
-        return hasVoted;
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
+    public boolean getHasVoted() {
+        return hasVoted;
+    }
+
     //setters
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setHasVoted(boolean hasVoted) {
         this.hasVoted = hasVoted;
     }
@@ -34,4 +42,3 @@ public class Voter {
         this.name = name;
     }
 }
-
