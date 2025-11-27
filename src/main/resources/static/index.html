@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voting App</title>
+    <script defer src="app.js"></script>
+</head>
+<body>
+<h2>Candidates</h2>
+<ul id="candidateList"></ul>
+
+<input type="text" id="candidateName" placeholder="Candidate name">
+<button onclick="addCandidate()">Add Candidate</button>
+
+<hr>
+
+<h2>Voters</h2>
+<ul id="voterList"></ul>
+
+<input type="text" id="voterName" placeholder="Voter name">
+<button onclick="addVoter()">Add Voter</button>
+
+<hr>
+
+<h2>Vote</h2>
+<select id="voterSelect"></select>
+<select id="candidateSelect"></select>
+<button onclick="vote()">Vote!</button>
+
+</body>
+</html>
