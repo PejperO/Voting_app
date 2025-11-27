@@ -4,6 +4,7 @@ import org.pejpero.voting_app.model.Voter;
 import org.pejpero.voting_app.repository.VoterRepository;
 import org.pejpero.voting_app.service.VotingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +20,15 @@ public class VoterController {
     private VotingService votingService;
 
     @PostMapping
-    public Voter add(@RequestBody Voter v) {
-        return repo.save(v);
+    public ResponseEntity<Voter> add(@RequestBody Voter voter) {
+        Voter saved = repo.save(voter);
+        return ResponseEntity.ok(saved);
+    }
+
+    @DeleteMapping("/{voterId}")
+    public ResponseEntity<Void> delete(@PathVariable Long voterId) {
+        repo.deleteById(voterId);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
@@ -28,9 +36,15 @@ public class VoterController {
         return repo.findAll();
     }
 
+    @GetMapping("/{voterId}")
+    public Voter getVoter(@PathVariable Long voterId){
+        return repo.findById(voterId).orElseThrow(() -> new RuntimeException("Voter not found"));
+    }
+
     @PostMapping("/{voterId}/vote/{candidateId}")
-    public void vote(@PathVariable Long voterId, @PathVariable Long candidateId) {
+    public boolean vote(@PathVariable Long voterId, @PathVariable Long candidateId) {
         votingService.castVote(candidateId, voterId);
+        return true;
     }
 }
 
