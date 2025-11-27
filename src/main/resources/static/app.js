@@ -27,18 +27,27 @@ async function loadVoters() {
 
     const list = document.getElementById("voterList");
     const select = document.getElementById("voterSelect");
+    const filter = document.getElementById("voterFilter").value;
 
     list.innerHTML = "";
     select.innerHTML = "";
 
-    data.forEach(v => {
-        const status = v.hasVoted ? "(Voted)" : "(Not voted)";
-        list.innerHTML += `<li>${v.name} ${status}</li>`;
+    let filtered = data;
+    if (filter === "voted") {
+        filtered = data.filter(v => v.hasVoted === true);
+    } else if (filter === "notVoted") {
+        filtered = data.filter(v => v.hasVoted === false);
+    }
 
-        if (!v.hasVoted) {
-            select.innerHTML += `<option value="${v.id}">${v.name}</option>`;
-        }
+    filtered.forEach(v => {
+        list.innerHTML += `<li>${v.name} <span>${v.hasVoted ? "🟢" : "🔴"}</span></li>`;
     });
+
+    data
+        .filter(v => !v.hasVoted)
+        .forEach(v => {
+            select.innerHTML += `<option value="${v.id}">${v.name}</option>`;
+        });
 }
 
 async function addCandidate() {
@@ -77,7 +86,7 @@ async function vote() {
 
     await fetch(`${API_URL}/voters/${voterId}/vote/${candidateId}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" }
+        headers: {"Content-Type": "application/json"}
     });
 
     loadData();

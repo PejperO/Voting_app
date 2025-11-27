@@ -4,28 +4,36 @@
     <meta charset="UTF-8">
     <title>Voting App</title>
     <script defer src="app.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h2>Candidates</h2>
-<ul id="candidateList"></ul>
+<div class="container">
+    <h2>Candidates</h2>
+    <ul id="candidateList"></ul>
 
-<input type="text" id="candidateName" placeholder="Candidate name">
-<button onclick="addCandidate()">Add Candidate</button>
+    <input type="text" id="candidateName" placeholder="Candidate name">
+    <button onclick="addCandidate()">Add Candidate</button>
 
-<hr>
+    <h2>Voters</h2>
 
-<h2>Voters</h2>
-<ul id="voterList"></ul>
+    <select id="voterFilter" onchange="loadVoters()" style="width: 200px; margin: 0 auto 10px; display: block;">
+        <option value="all">All voters</option>
+        <option value="voted">Voted</option>
+        <option value="notVoted">Not voted</option>
+    </select>
 
-<input type="text" id="voterName" placeholder="Voter name">
-<button onclick="addVoter()">Add Voter</button>
+    <ul id="voterList"></ul>
+    <input type="text" id="voterName" placeholder="Voter name">
+    <button onclick="addVoter()">Add Voter</button>
 
-<hr>
+    <h2>Vote</h2>
 
-<h2>Vote</h2>
-<select id="voterSelect"></select>
-<select id="candidateSelect"></select>
-<button onclick="vote()">Vote!</button>
+    <div id="voteRow">
+        <select id="voterSelect"></select>
+        <select id="candidateSelect"></select>
+        <button onclick="vote()">Vote</button>
+    </div>
 
+</div>
 </body>
 </html>

@@ -1,0 +1,97 @@
+:root {
+    --bg: #0b0f13;
+    --panel: rgba(255, 255, 255, 0.06);
+    --muted: #9aa6b2;
+    --text: #e6eef3;
+    --accent: #22d3ee;
+    --accent-2: #60a5fa;
+    --radius: 10px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* FULL HEIGHT BACKGROUND (fix for black bar) */
+html, body {
+    height: 100%;
+    margin: 0;
+    background: linear-gradient(180deg, var(--bg), #071018 100%);
+    background-attachment: fixed;
+    font-family: Inter, sans-serif;
+    color: var(--text);
+}
+
+/* MAIN CONTAINER */
+.container {
+    width: min(600px, 90%);
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* mniejsze odstępy */
+}
+
+/* HEADERS */
+h2 {
+    text-align: center;
+    margin: 15px 0 5px;
+    font-size: 18px;
+}
+
+/* LISTS – half width look */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    width: 50%; /* zmniejszenie szerokości listy o połowę */
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+li {
+    background: var(--panel);
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* INPUTS + SELECTS */
+input[type="text"], select {
+    width: 50%; /* dopasowane do listy */
+    margin: 0 auto;
+    padding: 8px 10px; /* mniejsze pola tekstowe */
+    border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,0.25); /* wyraźny border */
+    background: rgba(20, 30, 40, 0.8); /* ciemniejsze wyraźne tło */
+    color: var(--text);
+}
+
+/* BUTTONS */
+button {
+    width: 140px;
+    margin: 0 auto;
+    padding: 9px 12px; /* mniejszy przycisk */
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    color: #052026;
+    font-weight: 700;
+    box-shadow: var(--shadow);
+}
+
+/* --- VOTE ROW IN ONE LINE --- */
+#voteRow {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+#voteRow select {
+    width: 180px; /* szerokość w jednej linii */
+}
+
+#voteRow button {
+    width: 120px;
+}
