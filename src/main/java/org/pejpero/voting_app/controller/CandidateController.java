@@ -1,11 +1,9 @@
 package org.pejpero.voting_app.controller;
 
 import org.pejpero.voting_app.model.Candidate;
-import org.pejpero.voting_app.repository.CandidateRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.pejpero.voting_app.service.CandidateService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -13,12 +11,15 @@ import java.util.UUID;
 @RequestMapping("/candidates")
 public class CandidateController {
 
-    @Autowired
-    private CandidateRepository repo;
+    private final CandidateService repo;
+
+    public CandidateController(CandidateService repo) {
+        this.repo = repo;
+    }
 
     @PostMapping
     public ResponseEntity<Candidate> add(@RequestBody Candidate candidate) {
-        Candidate saved = repo.save(candidate);
+        Candidate saved = repo.add(candidate);
         return ResponseEntity.ok(saved);
     }
 
@@ -35,13 +36,11 @@ public class CandidateController {
 
     @GetMapping("/{candidateId}")
     public Candidate getCandidate(@PathVariable UUID candidateId) {
-        return repo.findById(candidateId).orElseThrow(() -> new RuntimeException("Candidate not found"));
+        return repo.getCandidate(candidateId);
     }
 
     @GetMapping("/votes/{candidateId}")
     public int getVotesCount(@PathVariable UUID candidateId) {
-        Candidate candidate = repo.findById(candidateId).orElseThrow(() -> new RuntimeException("Candidate not found"));
-        return candidate.getVotesCount();
+        return repo.getVotesCount(candidateId);
     }
 }
-

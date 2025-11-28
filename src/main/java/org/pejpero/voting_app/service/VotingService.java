@@ -18,7 +18,7 @@ public class VotingService {
     @Autowired
     private VoterRepository voterRepository;
 
-    public void castVote(UUID candidateId, UUID voterId) {
+    public boolean castVote(UUID candidateId, UUID voterId) {
         Voter voter = voterRepository.findById(voterId)
                 .orElseThrow(() -> new RuntimeException("Voter not found"));
 
@@ -29,12 +29,11 @@ public class VotingService {
         Candidate candidate = candidateRepository.findById(candidateId)
                 .orElseThrow(() -> new RuntimeException("Candidate not found"));
 
-        //candidate.setVotesCount(candidate.getVotesCount() + 1);
         candidate.setNewVote();
         voter.setHasVoted(true);
 
         candidateRepository.save(candidate);
         voterRepository.save(voter);
+        return true;
     }
 }
-

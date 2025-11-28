@@ -1,12 +1,10 @@
 package org.pejpero.voting_app.controller;
 
 import org.pejpero.voting_app.model.Voter;
-import org.pejpero.voting_app.repository.VoterRepository;
+import org.pejpero.voting_app.service.VoterService;
 import org.pejpero.voting_app.service.VotingService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -14,15 +12,16 @@ import java.util.UUID;
 @RequestMapping("/voters")
 public class VoterController {
 
-    @Autowired
-    private VoterRepository repo;
+    private final VoterService repo;
+    private final VotingService votingService;
 
-    @Autowired
-    private VotingService votingService;
-
+    public VoterController(VoterService repo, VotingService votingService) {
+        this.repo = repo;
+        this.votingService = votingService;
+    }
     @PostMapping
     public ResponseEntity<Voter> add(@RequestBody Voter voter) {
-        Voter saved = repo.save(voter);
+        Voter saved = repo.add(voter);
         return ResponseEntity.ok(saved);
     }
 
@@ -39,13 +38,11 @@ public class VoterController {
 
     @GetMapping("/{voterId}")
     public Voter getVoter(@PathVariable UUID voterId){
-        return repo.findById(voterId).orElseThrow(() -> new RuntimeException("Voter not found"));
+        return repo.getVoter(voterId);
     }
 
     @PostMapping("/{voterId}/vote/{candidateId}")
     public boolean vote(@PathVariable UUID voterId, @PathVariable UUID candidateId) {
-        votingService.castVote(candidateId, voterId);
-        return true;
+        return votingService.castVote(candidateId, voterId);
     }
 }
-
