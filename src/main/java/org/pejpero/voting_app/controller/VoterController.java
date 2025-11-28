@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/voters")
@@ -26,7 +27,7 @@ public class VoterController {
     }
 
     @DeleteMapping("/{voterId}")
-    public ResponseEntity<Void> delete(@PathVariable Long voterId) {
+    public ResponseEntity<Void> delete(@PathVariable UUID voterId) {
         repo.deleteById(voterId);
         return ResponseEntity.noContent().build();
     }
@@ -37,12 +38,12 @@ public class VoterController {
     }
 
     @GetMapping("/{voterId}")
-    public Voter getVoter(@PathVariable Long voterId){
+    public Voter getVoter(@PathVariable UUID voterId){
         return repo.findById(voterId).orElseThrow(() -> new RuntimeException("Voter not found"));
     }
 
     @PostMapping("/{voterId}/vote/{candidateId}")
-    public boolean vote(@PathVariable Long voterId, @PathVariable Long candidateId) {
+    public boolean vote(@PathVariable UUID voterId, @PathVariable UUID candidateId) {
         votingService.castVote(candidateId, voterId);
         return true;
     }

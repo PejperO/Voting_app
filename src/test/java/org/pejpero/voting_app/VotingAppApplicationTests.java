@@ -85,7 +85,7 @@ class VotingAppApplicationTests {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
-        Long candidateId = objectMapper.readTree(candidateResponse).get("id").asLong();
+        String candidateId = objectMapper.readTree(candidateResponse).get("id").asText();
 
         // 2) Dodaj wyborcę
         String voterResponse = mockMvc.perform(post("/voters")
@@ -94,7 +94,7 @@ class VotingAppApplicationTests {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
-        Long voterId = objectMapper.readTree(voterResponse).get("id").asLong();
+        String voterId = objectMapper.readTree(voterResponse).get("id").asText();
 
         // 3) Oddaj głos
         mockMvc.perform(post("/voters/" + voterId + "/vote/" + candidateId))
@@ -121,10 +121,22 @@ class VotingAppApplicationTests {
         assertTrue(updatedVoter.get("hasVoted").asBoolean());
     }
 
-    private JsonNode findById(ArrayNode array, Long id) {
+    private JsonNode findById(ArrayNode array, String id) {
         for (JsonNode n : array) {
-            if (n.has("id") && n.get("id").isNumber() && n.get("id").asLong() == id) {
-                return n;
+            if (n.has("id")) {
+                // prefer textual comparison (UUIDs), fallback to numeric comparison if JSON id is a number
+                if (n.get("id").isTextual() && n.get("id").asText().equals(id)) {
+                    return n;
+                }
+                if (n.get("id").isNumber()) {
+                    try {
+                        if (n.get("id").asLong() == Long.parseLong(id)) {
+                            return n;
+                        }
+                    } catch (NumberFormatException ex) {
+                        // id is not numeric -> ignore
+                    }
+                }
             }
         }
         return null;

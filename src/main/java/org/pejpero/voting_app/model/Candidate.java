@@ -4,20 +4,25 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.util.UUID;
 
 @Entity
 public class Candidate {
 
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    //@Type(type = "uuid-char")
+    //@Column(length = 36)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     private String name;
 
     private int votesCount = 0;
 
     //getters
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -30,7 +35,7 @@ public class Candidate {
     }
 
     //setters
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
