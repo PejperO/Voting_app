@@ -1,18 +1,11 @@
 package org.pejpero.voting_app.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
 public class Voter {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    //@Type(type = "uuid-char")
-    //@Column(length = 36)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -20,6 +13,10 @@ public class Voter {
     private String name;
 
     private boolean hasVoted = false;
+
+    @SuppressWarnings("unused") // Used by JPA
+    @Version
+    private Long version;
 
     //getters
     public UUID getId() {
