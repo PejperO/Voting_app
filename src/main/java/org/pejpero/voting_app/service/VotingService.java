@@ -4,7 +4,6 @@ import org.pejpero.voting_app.model.Candidate;
 import org.pejpero.voting_app.model.Voter;
 import org.pejpero.voting_app.repository.CandidateRepository;
 import org.pejpero.voting_app.repository.VoterRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -12,17 +11,22 @@ import java.util.UUID;
 @Service
 public class VotingService {
 
-    @Autowired
-    private CandidateRepository candidateRepository;
+    private final CandidateRepository candidateRepository;
+    private final VoterRepository voterRepository;
 
-    @Autowired
-    private VoterRepository voterRepository;
+    public VotingService(
+            CandidateRepository candidateRepository,
+            VoterRepository voterRepository
+    ) {
+        this.candidateRepository = candidateRepository;
+        this.voterRepository = voterRepository;
+    }
 
     public boolean castVote(UUID candidateId, UUID voterId) {
         Voter voter = voterRepository.findById(voterId)
                 .orElseThrow(() -> new RuntimeException("Voter not found"));
 
-        if(voter.getHasVoted()) {
+        if (voter.getHasVoted()) {
             throw new RuntimeException("Voter has already voted");
         }
 

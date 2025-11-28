@@ -2,7 +2,6 @@ package org.pejpero.voting_app.service;
 
 import org.pejpero.voting_app.model.Voter;
 import org.pejpero.voting_app.repository.VoterRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.UUID;
 @Service
 public class VoterService {
 
-    @Autowired
-    private VoterRepository voterRepository;
+    private final VoterRepository voterRepository;
+
+    public VoterService(VoterRepository voterRepository) {
+        this.voterRepository = voterRepository;
+    }
 
     public Voter add(Voter voter) {
         return voterRepository.save(voter);
@@ -27,6 +29,7 @@ public class VoterService {
     }
 
     public Voter getVoter(UUID voterId) {
-        return voterRepository.findById(voterId).orElse(null);
+        return voterRepository.findById(voterId)
+                .orElseThrow(() -> new RuntimeException("Voter not found"));
     }
 }
