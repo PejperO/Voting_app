@@ -1,9 +1,15 @@
 package org.pejpero.voting_app.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Voter {
 
     @Id
@@ -14,33 +20,6 @@ public class Voter {
 
     private boolean hasVoted = false;
 
-    @SuppressWarnings("unused") // Used by JPA
     @Version
     private Long version;
-
-    //getters
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean getHasVoted() {
-        return hasVoted;
-    }
-
-    //setters
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setHasVoted(boolean hasVoted) {
-        this.hasVoted = hasVoted;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

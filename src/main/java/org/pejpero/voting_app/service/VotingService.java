@@ -67,7 +67,7 @@ public class VotingService {
         Voter voter = voterRepository.findById(voterId)
                 .orElseThrow(() -> new RuntimeException("Voter not found"));
 
-        if (voter.getHasVoted()) {
+        if (voter.isHasVoted()) {
             throw new RuntimeException("Voter has already voted");
         }
 
